@@ -69,6 +69,7 @@ public class UiTest {
         sendBtn.click();
         WebElement formColor = driver.findElement(By.cssSelector("[style = \"border-color: red;\"]"));
         wait.until(ExpectedConditions.visibilityOf(formColor));
+        Assert.assertTrue(formColor.isDisplayed());
         System.out.println("Vvedite name and telephone number!!!");
     }
 

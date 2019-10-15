@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,7 +19,7 @@ public class UiTest {
     @BeforeMethod
     public static void setDriver() {
         driver = new ChromeDriver();
-        System.setProperty("webdriver.crome.driver", "C:\\Users\\Admin\\Desktop\\Lesson8(HW)\\UI_testsdz");
+        System.setProperty("webdriver.crome.driver", "chromedriver.exe");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
 
@@ -30,7 +31,7 @@ public class UiTest {
         driver.get("http://iteaua-develop.demo.gns-it.com/");
         WebDriverWait wait = new WebDriverWait(driver, 5);
         WebElement callbackbtn = driver.findElement(By.className("callback-btn"));
-        WebElement preloader = driver.findElement(By.id("preload-it") );
+        WebElement preloader = driver.findElement(By.id("preload-it"));
         wait.until(ExpectedConditions.invisibilityOf(preloader));
         wait.until(ExpectedConditions.visibilityOf(callbackbtn));
         wait.until(ExpectedConditions.elementToBeClickable(callbackbtn));
@@ -44,9 +45,13 @@ public class UiTest {
         WebElement sendBtn = driver.findElement(By.xpath("//*[@id=\"callback-form\"]/input[4]"));
         sendBtn.click();
 
+        String expectedValue = "Спасибо!\n" + "Наш менеджер свяжется с Вами.";
+        WebElement systemResponse = driver.findElement(By.xpath("//div[@class='b-header-contacte-phone-thank']"));
+        String actualValue = systemResponse.getText();
+        Assert.assertEquals(actualValue, expectedValue);
+
         WebElement closeBtn = driver.findElement(By.xpath("//*[@id=\"footer\"]/div[3]/div/div[1]"));
         closeBtn.click();
-
 
     }
 
@@ -55,7 +60,7 @@ public class UiTest {
         driver.get("http://iteaua-develop.demo.gns-it.com/");
         WebDriverWait wait = new WebDriverWait(driver, 5);
         WebElement callbackbtn = driver.findElement(By.className("callback-btn"));
-        WebElement preloader = driver.findElement(By.id("preload-it") );
+        WebElement preloader = driver.findElement(By.id("preload-it"));
         wait.until(ExpectedConditions.invisibilityOf(preloader));
         wait.until(ExpectedConditions.visibilityOf(callbackbtn));
         wait.until(ExpectedConditions.elementToBeClickable(callbackbtn));
